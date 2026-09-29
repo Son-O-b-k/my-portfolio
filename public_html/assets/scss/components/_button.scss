@@ -1,43 +1,104 @@
-.btn-rounded {
-	border-radius: 100px;
+/* ---------------------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------------------- */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    font-family: $font-family-base;
+    font-size: .9375rem;
+    font-weight: 600;
+    letter-spacing: -.005em;
+    border-width: 1px;
+    transition: all $dur $ease;
+    white-space: nowrap;
+
+    i { font-size: .95em; line-height: 1; }
+
+    &:focus,
+    &.focus { box-shadow: 0 0 0 3px rgba($accent, .3); }
 }
 
-.w-lg {
-	min-width: 150px;
+.btn-primary {
+    background: $accent;
+    border-color: $accent;
+    color: $accent-ink;
+
+    &:hover, &:focus, &:active, &:not(:disabled):not(.disabled):active {
+        background: $accent-hi;
+        border-color: $accent-hi;
+        color: $accent-ink;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px -10px rgba($accent, .6);
+    }
 }
 
+.btn-ghost {
+    background: rgba(255,255,255,.03);
+    border-color: $line-strong;
+    color: $ink;
 
-.btn-component {
-	position: fixed;
-	top: 140px;
-	right: -225px;
-	z-index: 9999;
-	transition: .4s;
-	padding: 8px 12px;
-	border-radius: 3px 0 0 3px;
-	font-weight: 100;
+    &:hover, &:focus {
+        background: rgba(255,255,255,.06);
+        border-color: $ink-dim;
+        color: $ink;
+        transform: translateY(-2px);
+    }
+}
 
-	&.affix {
-		right: -115px;
-	}
+.btn-outline-accent {
+    background: transparent;
+    border-color: rgba($accent, .45);
+    color: $accent;
 
-	i {
-		position: relative;
-		display: inline-block;
-		margin-right: 20px;
-		transition: .4s;
-	}
+    &:hover, &:focus {
+        background: rgba($accent, .1);
+        border-color: $accent;
+        color: $accent-hi;
+        transform: translateY(-2px);
+    }
+}
 
-	&:hover {
-		
-		right: 0;
+/* legacy template classes, remapped so nothing renders un-themed */
+.btn-outline-danger { @extend .btn-outline-accent; }
+.btn-rounded { border-radius: 99px; }
 
-		i {
-			transform: translateX(10px);
-			margin-right: -20px;
-			opacity: 0;
-		}
+.btn-lg {
+    font-size: 1rem;
+    padding: .8125rem 1.75rem;
+}
 
+.w-lg { min-width: 190px; }
 
-	}
+/* back to top */
+.to-top {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 1020;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $line;
+    border-radius: $border-radius;
+    background: rgba(16, 19, 25, .9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: $ink-muted;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all $dur $ease;
+
+    &.is-visible { opacity: 1; visibility: visible; transform: none; }
+
+    &:hover {
+        color: $accent;
+        border-color: rgba($accent, .45);
+        background: rgba($accent, .1);
+    }
 }

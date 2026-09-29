@@ -1,44 +1,156 @@
+/* ---------------------------------------------------------------------------
+   Base + typography
+   --------------------------------------------------------------------------- */
+
+:root {
+    --accent: #{$accent};
+    --bg: #{$bg};
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+    }
+}
+
 body {
+    background: $bg;
+    color: $ink-muted;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
 }
-/* typography */
+
+::selection { background: rgba($accent, .28); color: $ink; }
+
+/* Scrollbar ---------------------------------------------------------------- */
+* { scrollbar-width: thin; scrollbar-color: $line-strong transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: $bg; }
+::-webkit-scrollbar-thumb {
+    background: $line-strong;
+    border-radius: 99px;
+    border: 2px solid $bg;
+    &:hover { background: lighten($line-strong, 10%); }
+}
+
+/* Headings ----------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: $font-family-display;
+    color: $ink;
+    letter-spacing: -.02em;
+}
+
+h1, .h1 { font-size: clamp(2.25rem, 1.4rem + 3.4vw, 4rem); font-weight: 700; }
+h2, .h2 { font-size: clamp(1.75rem, 1.25rem + 2vw, 2.75rem); font-weight: 700; }
+h3, .h3 { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem); }
+h4, .h4 { font-size: 1.25rem; }
+h5, .h5 { font-size: 1.0625rem; }
+h6, .h6 { font-size: .9375rem; letter-spacing: -.01em; }
+
 p {
-	font-size: calc(13px + (14 - 13) * ((100vw - 300px) / (1300 - 300)));
-	opacity: .8;
-	color: #444;
-} 
-
-.title {
-	font-size: calc(15px + (20 - 15) * ((100vw - 300px) / (1300 - 300)));
+    font-size: 1rem;
+    line-height: 1.75;
+    color: $ink-muted;
 }
 
-.icon-md {
-    font-size: 22px;
+a { transition: color $dur $ease; }
+
+hr {
+    border: 0;
+    border-top: 1px solid $line;
+    margin: 1.5rem 0;
 }
 
-.icon-lg {
-    font-size: 30px;
+/* Utility type ------------------------------------------------------------- */
+.mono {
+    font-family: $font-family-monospace;
+    font-size: .8125rem;
+    letter-spacing: .02em;
 }
 
-.icon-xl {
-	font-size: 65px;
-}
+.eyebrow {
+    @extend .mono;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    font-size: .75rem;
+    font-weight: 500;
+    color: $accent;
+    margin-bottom: 1rem;
 
-.info {
-    li {
-        padding-bottom: 8px;
+    &::before {
+        content: '';
+        width: 22px;
+        height: 1px;
+        background: $accent;
+        opacity: .6;
     }
-    span {
-        font-weight: 600;
-        font-size: 14px;
-        color: $gray-800;
-    }
-    color: $gray-600;
-    font-size: 14px;
 }
+
+.lead-text {
+    font-size: clamp(1rem, .95rem + .3vw, 1.125rem);
+    line-height: 1.8;
+    color: $ink-muted;
+}
+
+.text-ink      { color: $ink !important; }
+.text-muted-2  { color: $ink-muted !important; }
+.text-dim      { color: $ink-dim !important; }
+.text-accent   { color: $accent !important; }
+
+/* Legacy template hooks kept so existing markup never falls back to black */
+.text-danger   { color: $accent !important; }
+.text-light    { color: $ink !important; }
+
+.title    { font-family: $font-family-display; color: $ink; font-size: 1.0625rem; }
+.subtitle { font-size: .9375rem; color: $ink-muted; }
 
 .line {
     display: block;
-    width: 25px;
-    height: 1.5px;
-    background-color: $primary;
+    width: 34px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, $accent, rgba($accent, 0));
+}
+
+.icon-md { font-size: 20px; }
+.icon-lg { font-size: 26px; }
+.icon-xl { font-size: 56px; }
+
+/* Section heading pattern -------------------------------------------------- */
+.section-head {
+    max-width: 640px;
+    margin-bottom: 3.5rem;
+
+    h2 { margin-bottom: .75rem; }
+    p  { margin-bottom: 0; }
+}
+
+.section-head-center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+
+    .eyebrow::before { display: none; }
+}
+
+/* Reveal-on-scroll --------------------------------------------------------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .7s $ease, transform .7s $ease;
+
+    &.is-visible { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; }
 }

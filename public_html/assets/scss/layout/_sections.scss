@@ -1,76 +1,474 @@
+/* ---------------------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------------------- */
+
 .section {
-    padding: 80px 0;
-
-    &.bg-custom-gray {
-        background: rgba(#F2F4F7, .15);
-    }
-}
-
-.about-section {
-    border-bottom: 1px solid $border-color;
-
-    .about-card {
-        padding: 60px;
-        border-right: 1px solid $border-color;
-
-        &:last-child {
-            border-right: none;
-        }
-
-    }
-}
-
-
-.contact {
     position: relative;
-    min-height: 700px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 0;
+    padding: 6.5rem 0;
 
-    @include media-breakpoint-down(md) {
-        padding: 300px 0 0;
+    @include media-breakpoint-down(sm) { padding: 4.5rem 0; }
 
-        .contact-form-card {
-            border-bottom: 1px solid $border-color;
-        }
+    &.bg-elev   { background: $bg-elev; }
+    &.bg-inset  { background: $bg-inset; }
+    &.has-rule  { border-top: 1px solid $line; }
+}
 
-        .contact-form-card,
-        .contact-info-card {
-            min-height: auto !important;
-        }
+/* faint top hairline glow used between major sections */
+.rule-glow {
+    height: 1px;
+    border: 0;
+    margin: 0;
+    background: linear-gradient(90deg, transparent, $line-strong 18%, $line-strong 82%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+   About
+   --------------------------------------------------------------------------- */
+
+.about-lead {
+    font-size: clamp(1.125rem, 1rem + .6vw, 1.4rem);
+    line-height: 1.6;
+    font-family: $font-family-display;
+    font-weight: 500;
+    color: $ink;
+    margin-bottom: 1.5rem;
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+        padding: .75rem 0;
+        border-bottom: 1px solid $line;
+        font-size: .9375rem;
+
+        &:last-child { border-bottom: 0; }
     }
 
-    .map {
+    .k {
+        flex: none;
+        width: 84px;
+        font-family: $font-family-monospace;
+        font-size: .75rem;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        color: $ink-dim;
+    }
+
+    .v { color: $ink; word-break: break-word; }
+
+    a.v:hover { color: $accent; }
+
+    /* stack key over value on narrow screens so long emails don't split mid-word */
+    @include media-breakpoint-down(xs) {
+        li { display: block; }
+        .k { width: auto; display: block; margin-bottom: .1875rem; }
+    }
+}
+
+/* what-I-do panels */
+.capability {
+    position: relative;
+    height: 100%;
+    padding: 1.75rem;
+    border: 1px solid $line;
+    border-radius: $border-radius-lg;
+    background: $bg-elev;
+    transition: border-color $dur $ease, transform $dur $ease, background $dur $ease;
+
+    &:hover {
+        border-color: $line-strong;
+        background: $bg-elev-2;
+        transform: translateY(-3px);
+    }
+
+    .cap-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        margin-bottom: 1.125rem;
+        border-radius: 11px;
+        border: 1px solid rgba($accent, .25);
+        background: rgba($accent, .09);
+        color: $accent;
+        font-size: 19px;
+    }
+
+    h5 { margin-bottom: .625rem; }
+    p  { font-size: .9375rem; margin-bottom: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   Tech stack — replaces the old percentage bars
+   --------------------------------------------------------------------------- */
+
+.stack-group {
+    padding: 1.75rem 0;
+    border-bottom: 1px solid $line;
+
+    &:last-child { border-bottom: 0; padding-bottom: 0; }
+    &:first-child { padding-top: 0; }
+}
+
+.stack-label {
+    font-family: $font-family-monospace;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    color: $ink-dim;
+    margin-bottom: 1rem;
+
+    &::before { content: '// '; color: $accent; }
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .4375rem .8125rem;
+    border: 1px solid $line;
+    border-radius: 8px;
+    background: rgba(255,255,255,.025);
+    font-size: .8125rem;
+    font-weight: 500;
+    color: $ink;
+    transition: all $dur $ease;
+
+    &:hover {
+        border-color: rgba($accent, .4);
+        background: rgba($accent, .08);
+        color: $accent;
+        transform: translateY(-2px);
+    }
+
+    &.is-core {
+        border-color: rgba($accent, .32);
+        background: rgba($accent, .08);
+        color: $accent;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   Experience timeline
+   --------------------------------------------------------------------------- */
+
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+
+    &::before {
+        content: '';
         position: absolute;
-        left: 0;
-        top: 0;
+        left: 5px;
+        top: .5rem;
+        bottom: .5rem;
+        width: 1px;
+        background: linear-gradient(180deg, $accent, $line 22%, $line 82%, transparent);
+    }
+
+    @include media-breakpoint-down(sm) { padding-left: 1.5rem; }
+}
+
+.tl-item {
+    position: relative;
+    padding-bottom: 2.75rem;
+
+    &:last-child { padding-bottom: 0; }
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: -2rem;
+        top: .45rem;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: $bg;
+        border: 2px solid $line-strong;
+        transition: all $dur $ease;
+    }
+
+    &.is-current::before {
+        border-color: $accent;
+        background: $accent;
+        box-shadow: 0 0 0 4px rgba($accent, .16);
+    }
+
+    &:hover::before { border-color: $accent; }
+
+    @include media-breakpoint-down(sm) { &::before { left: -1.5rem; } }
+}
+
+.tl-date {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    font-family: $font-family-monospace;
+    font-size: .75rem;
+    letter-spacing: .05em;
+    color: $accent;
+    margin-bottom: .5rem;
+}
+
+.tl-role {
+    font-family: $font-family-display;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $ink;
+    margin-bottom: .1875rem;
+}
+
+.tl-org {
+    font-size: .875rem;
+    color: $ink-dim;
+    margin-bottom: .875rem;
+
+    .org-name { color: $ink-muted; font-weight: 500; }
+}
+
+.tl-points {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+
+    li {
+        position: relative;
+        padding-left: 1.25rem;
+        margin-bottom: .5rem;
+        font-size: .9375rem;
+        line-height: 1.7;
+        color: $ink-muted;
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: .7em;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: $line-strong;
+        }
+    }
+}
+
+.tl-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .375rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        padding: .1875rem .5rem;
+        border: 1px solid $line;
+        border-radius: 5px;
+        font-family: $font-family-monospace;
+        font-size: .6875rem;
+        color: $ink-dim;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   Portfolio
+   --------------------------------------------------------------------------- */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem;
+
+    a {
+        display: inline-block;
+        padding: .4375rem .9375rem;
+        border: 1px solid $line;
+        border-radius: 99px;
+        font-size: .8125rem;
+        font-weight: 500;
+        color: $ink-muted;
+        cursor: pointer;
+        transition: all $dur $ease;
+
+        &:hover { color: $ink; border-color: $line-strong; }
+
+        &.active {
+            color: $accent-ink;
+            background: $accent;
+            border-color: $accent;
+        }
+    }
+}
+
+.portfolio-container {
+    margin: 0 -.75rem;
+
+    &::after { content: ''; display: block; clear: both; }
+}
+
+.portfolio-cell {
+    float: left;
+    width: 33.3333%;
+    padding: 0 .75rem 1.5rem;
+
+    @include media-breakpoint-down(md) { width: 50%; }
+    @include media-breakpoint-down(xs) { width: 100%; }
+}
+
+.project {
+    display: block;
+    height: 100%;
+    border: 1px solid $line;
+    border-radius: $border-radius-lg;
+    background: $bg-elev;
+    overflow: hidden;
+    transition: transform $dur $ease, border-color $dur $ease, box-shadow $dur $ease;
+
+    &:hover,
+    &:focus-visible {
+        transform: translateY(-5px);
+        border-color: rgba($accent, .38);
+        box-shadow: $shadow-lg;
+
+        .project-thumb img { transform: scale(1.045); }
+        .project-title     { color: $accent; }
+        .project-arrow     { opacity: 1; transform: none; }
+    }
+}
+
+.project-thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: $bg-inset;
+    overflow: hidden;
+    border-bottom: 1px solid $line;
+
+    img {
         width: 100%;
         height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        display: block;
+        transition: transform .55s $ease;
     }
 
-    .contact-form-card,
-    .contact-info-card {
-        padding: 35px;
-        background: $white;
-        min-height: 500px;
+    /* legibility scrim */
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(10,12,16,0) 45%, rgba(10,12,16,.55));
+        pointer-events: none;
+    }
+}
+
+.project-body {
+    padding: 1.25rem 1.375rem 1.375rem;
+}
+
+.project-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .75rem;
+}
+
+.project-title {
+    font-family: $font-family-display;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: $ink;
+    margin: 0 0 .3125rem;
+    transition: color $dur $ease;
+}
+
+.project-arrow {
+    flex: none;
+    color: $accent;
+    font-size: 14px;
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition: all $dur $ease;
+}
+
+.project-desc {
+    font-size: .875rem;
+    line-height: 1.6;
+    color: $ink-muted;
+    margin: 0 0 .875rem;
+
+    /* clamp to 3 lines so cards line up in a fitRows grid */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: calc(3 * 1.6 * .875rem);
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3125rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        padding: .1875rem .4375rem;
+        border-radius: 4px;
+        background: rgba(255,255,255,.045);
+        font-family: $font-family-monospace;
+        font-size: .6875rem;
+        color: $ink-dim;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   CTA
+   --------------------------------------------------------------------------- */
+
+.cta {
+    position: relative;
+    padding: 5.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid $line;
+    border-bottom: 1px solid $line;
+    background:
+        radial-gradient(ellipse 60% 130% at 50% 0%, rgba($accent, .12), transparent 70%),
+        $bg-elev;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(to right,  rgba(255,255,255,.022) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255,255,255,.022) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: radial-gradient(ellipse 70% 100% at 50% 50%, #000, transparent 75%);
+        -webkit-mask-image: radial-gradient(ellipse 70% 100% at 50% 50%, #000, transparent 75%);
+        pointer-events: none;
     }
 
-    .contact-info-card {
-        padding-right: 20px;
-    }
-
-    .contact-title {
-        margin-bottom: 30px;
-
-        &::after {
-            content: '';
-            width: 20px;
-            height: 2px;
-            background: $primary;
-            display: block;
-            margin-top: 10px;
-        }
-    }
+    .container { position: relative; z-index: 1; }
 }

@@ -1,3 +1,59 @@
+/* ---------------------------------------------------------------------------
+   Footer
+   --------------------------------------------------------------------------- */
+
 .footer {
-    background: #17263C;
+    padding: 3.5rem 0 2.5rem;
+    background: $bg;
+    border-top: 1px solid $line;
+}
+
+.footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    padding-bottom: 2.25rem;
+    border-bottom: 1px solid $line;
+}
+
+.footer-tagline {
+    max-width: 22rem;
+    font-size: .9375rem;
+    color: $ink-muted;
+    margin: .875rem 0 0;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem 1.75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    a {
+        font-size: .9375rem;
+        color: $ink-muted;
+        &:hover { color: $accent; }
+    }
+}
+
+.footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.75rem;
+
+    p {
+        margin: 0;
+        font-family: $font-family-monospace;
+        font-size: .75rem;
+        color: $ink-dim;
+    }
+
+    a { color: $ink-muted; &:hover { color: $accent; } }
 }
